@@ -45,6 +45,8 @@ export class LandingComponent implements OnInit {
   whoWeAreVisible = false;
   ourWorkVisible = false;
 
+  mobileMenuOpen = false;
+
   // Dynamic Content Variables
   
   // Hero Section
@@ -167,6 +169,16 @@ export class LandingComponent implements OnInit {
     });
   }
 
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    // Prevent body scroll when menu is open
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
   @HostListener('window:scroll')
   onScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -228,7 +240,7 @@ export class LandingComponent implements OnInit {
 
   scrollToSection(sectionId: string) {
     if (sectionId === 'build-with-us') {
-      this.router.navigate(['/build']);
+      this.router.navigate(['/build-with-us']);
       return;
     }
 
