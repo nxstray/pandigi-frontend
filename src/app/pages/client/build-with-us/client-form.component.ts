@@ -54,6 +54,8 @@ export class ClientFormComponent implements OnInit {
   private lastScrollTop = 0;
   buildingVisible = false;
 
+  mobileMenuOpen = false;
+
   // Dynamic Content Variables
   
   // Hero Section
@@ -195,6 +197,15 @@ export class ClientFormComponent implements OnInit {
         this.loadingLayanan = false;
       }
     });
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   @HostListener('window:scroll')
