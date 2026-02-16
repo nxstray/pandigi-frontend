@@ -35,7 +35,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/client/reset-page/reset-page.component').then(m => m.ResetPageComponent)
   },
   {
-    path: 'build',
+    path: 'build-with-us',
     loadComponent: () => import('./pages/client/build-with-us/client-form.component').then(m => m.ClientFormComponent)
   },
   {
