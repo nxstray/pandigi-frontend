@@ -47,6 +47,8 @@ export class WhatWeDoComponent implements OnInit {
   buildingVisible = false;
   servicesVisible = false;
 
+  mobileMenuOpen = false;
+
   sectionStates: { [id: string]: boolean } = {};
 
   // Dynamic Content Variables
@@ -173,6 +175,15 @@ export class WhatWeDoComponent implements OnInit {
         console.error('Error loading page content from CMS:', err);
       }
     });
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   @HostListener('window:scroll')
