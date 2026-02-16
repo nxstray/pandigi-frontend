@@ -6,13 +6,35 @@
             <div class="navbar-logo">
                 <img src="/content/logo-no-bg.webp" alt="Navbar Logo" (click)="navigateToOtherPage('/')" loading="eager">
             </div>
-            <ul class="navbar-menu">
+            
+            <!-- Desktop Menu -->
+            <ul class="navbar-menu desktop-menu">
                 <li><a (click)="navigateToOtherPage('/what-we-do')">WHAT WE DO</a></li>
                 <li><a (click)="scrollToSection('hero')" class="active">WHO WE ARE</a></li>
                 <li><a (click)="navigateToOtherPage('/our-work')">OUR WORK</a></li>
-                <li><a (click)="navigateToOtherPage('/build')">BUILD WITH US</a></li>
+                <li><a (click)="navigateToOtherPage('/build-with-us')">BUILD WITH US</a></li>
             </ul>
+            
+            <!-- Hamburger Button -->
+            <button class="hamburger-btn" (click)="toggleMobileMenu()" [class.active]="mobileMenuOpen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" [class.active]="mobileMenuOpen">
+        <ul class="mobile-menu-list">
+            <li><a (click)="navigateToOtherPage('/what-we-do'); toggleMobileMenu()">WHAT WE DO</a></li>
+            <li><a (click)="scrollToSection('hero'); toggleMobileMenu()" class="active">WHO WE ARE</a></li>
+            <li><a (click)="navigateToOtherPage('/our-work'); toggleMobileMenu()">OUR WORK</a></li>
+            <li><a (click)="navigateToOtherPage('/build-with-us'); toggleMobileMenu()">BUILD WITH US</a></li>
+        </ul>
     </nav>
 
     <div class="hero-content" role="banner" aria-labelledby="hero-title">
@@ -26,7 +48,6 @@
     <div class="full-container">
         <h2 class="section-title">{{ timelineTitle }}</h2>
         <div class="timeline">
-            <div class="timeline-line"></div>
             <div class="timeline-item" *ngFor="let item of timelineItems; let i = index"
                 [ngClass]="{'left': i % 2 === 0, 'right': i % 2 !== 0}">
                 <div class="timeline-content">
@@ -72,7 +93,7 @@
                     </div>
                 </swiper-slide>
             </swiper-container>
-            <a class="cta-button" (click)="navigateToOtherPage('/build')">
+            <a class="cta-button" (click)="navigateToOtherPage('/build-with-us')">
                 Build with us
             </a>
         </div>

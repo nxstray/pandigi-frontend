@@ -80,6 +80,8 @@ export class WhoWeAreComponent implements OnInit, AfterViewInit {
   reviewsVisible = false;
   contactVisible = false;
 
+  mobileMenuOpen = false;
+
   // Dynamic Content Variables
   
   // Hero Section
@@ -282,6 +284,15 @@ export class WhoWeAreComponent implements OnInit, AfterViewInit {
 
       Object.assign(swiperEl, params);
       swiperEl.initialize();
+    }
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
   }
 
