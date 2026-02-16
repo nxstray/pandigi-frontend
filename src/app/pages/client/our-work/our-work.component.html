@@ -7,13 +7,35 @@
             <div class="navbar-logo">
                 <img src="/content/logo-no-bg.webp" alt="Navbar Logo" (click)="navigateToOtherPage('/')" loading="eager">
             </div>
-            <ul class="navbar-menu">
-                <li><a (click)="navigateToOtherPage('/what-we-do')">WHAT WE DO</a></li>
-                <li><a (click)="navigateToOtherPage('/who-we-are')">WHO WE ARE</a></li>
-                <li><a (click)="scrollToSection('hero')" class="active">OUR WORK</a></li>
-                <li><a (click)="navigateToOtherPage('/build')">BUILD WITH US</a></li>
+
+            <!-- Desktop Menu -->
+            <ul class="navbar-menu desktop-menu">
+            <li><a (click)="navigateToOtherPage('/what-we-do')">WHAT WE DO</a></li>
+            <li><a (click)="navigateToOtherPage('/who-we-are')">WHO WE ARE</a></li>
+            <li><a (click)="scrollToSection('hero')" class="active">OUR WORK</a></li>
+            <li><a (click)="navigateToOtherPage('/build-with-us')">BUILD WITH US</a></li>
             </ul>
+
+            <!-- Hamburger Button -->
+            <button class="hamburger-btn" (click)="toggleMobileMenu()" [class.active]="mobileMenuOpen">
+            <span></span>
+            <span></span>
+            <span></span>
+            </button>
         </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" [class.active]="mobileMenuOpen" (click)="toggleMobileMenu()"></div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" [class.active]="mobileMenuOpen">
+    <ul class="mobile-menu-list">
+        <li><a (click)="navigateToOtherPage('/what-we-do'); toggleMobileMenu()">WHAT WE DO</a></li>
+        <li><a (click)="navigateToOtherPage('/who-we-are'); toggleMobileMenu()">WHO WE ARE</a></li>
+        <li><a (click)="scrollToSection('hero'); toggleMobileMenu()" class="active">OUR WORK</a></li>
+        <li><a (click)="navigateToOtherPage('/build-with-us'); toggleMobileMenu()">BUILD WITH US</a></li>
+    </ul>
     </nav>
 
     <div id="hero-text" class="hero-content">

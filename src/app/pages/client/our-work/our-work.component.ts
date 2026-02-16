@@ -49,6 +49,8 @@ export class OurWorkComponent implements OnInit {
   buildingVisible = false;
   projectsVisible = false;
 
+  mobileMenuOpen = false;
+
   sectionStates: { [id: string]: boolean } = {};
 
   // Dropdown states for custom dropdown
@@ -138,6 +140,15 @@ export class OurWorkComponent implements OnInit {
   selectYear(value: number | null) {
     this.selectedYear = value;
     this.dropdownStates['year'] = false;
+  }
+
+  toggleMobileMenu() {
+  this.mobileMenuOpen = !this.mobileMenuOpen;
+    if (this.mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   @HostListener('document:click', ['$event'])
