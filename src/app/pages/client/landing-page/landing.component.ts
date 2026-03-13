@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ContentPageService, PageName } from '../../../service/admin/content-page.service';
+import { retry } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
@@ -89,7 +90,9 @@ export class LandingComponent implements OnInit {
    * Load all dynamic content from CMS
    */
   loadPageContent() {
-    this.contentService.getPageContent(PageName.LANDING).subscribe({
+    this.contentService.getPageContent(PageName.LANDING).pipe(
+      retry({ count: 5, delay: 6000 })
+    ).subscribe({
       next: (response) => {
         const content = response.content;
         
