@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectService, ProjectDTO, ProjectCategory } from '../../../service/project/project.service';
 import { ToastService } from '../../../service/animations/toast.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 interface UploadResponse {
   success: boolean;
@@ -360,7 +361,8 @@ export class ProjectManageComponent implements OnInit {
     
     const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
     if (uuidPattern.test(filename)) {
-      return `http://localhost:8083/uploads/${filename}`;
+      const baseUrl = environment.apiUrl.replace('/api', '');
+      return `${baseUrl}/uploads/${filename}`;
     }
     
     return `/content/${filename}`;

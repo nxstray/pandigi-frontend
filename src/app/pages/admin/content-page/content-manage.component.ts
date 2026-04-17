@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ContentPageService, PageName, ContentType, ContentPageDTO, UpdateContentRequest } from '../../../service/admin/content-page.service';
 import { ToastService } from '../../../service/animations/toast.service'
 import { AuthService } from '../../../service/auth/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-content-manage',
@@ -315,10 +316,10 @@ export class ContentManageComponent implements OnInit {
    */
   private getImagePreviewUrl(filename: string): string {
     if (!filename) {
-      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+      return 'data:image/svg+xml;base64,...';
     }
     
-    // Full URL (http/https)
+    // Full URL (http/https) - kembalikan langsung
     if (filename.startsWith('http://') || filename.startsWith('https://')) {
       return filename;
     }
@@ -331,10 +332,11 @@ export class ContentManageComponent implements OnInit {
     // UUID pattern - file from backend upload
     const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
     if (uuidPattern.test(filename)) {
-      return `http://localhost:8083/uploads/${filename}`;
+      // Ambil base URL dari environment, hapus /api di belakangnya
+      const baseUrl = environment.apiUrl.replace('/api', '');
+      return `${baseUrl}/uploads/${filename}`;
     }
     
-    // Default: local file in /public/content/
     return `/content/${filename}`;
   }
 
