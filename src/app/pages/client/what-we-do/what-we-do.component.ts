@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ContentPageService, PageName } from '../../../service/admin/content-page.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-what-we-do',
@@ -225,25 +226,14 @@ export class WhatWeDoComponent implements OnInit {
    */
   private getImageUrl(filename: string | undefined): string {
     if (!filename) return '';
+    if (filename.startsWith('http://') || filename.startsWith('https://')) return filename;
+    if (filename.startsWith('/content/')) return filename;
     
-    // Return full URL jika sudah lengkap (http/https)
-    if (filename.startsWith('http://') || filename.startsWith('https://')) {
-      return filename;
-    }
-    
-    // if /content/ already in front, return immediately
-    if (filename.startsWith('/content/')) {
-      return filename;
-    }
-    
-    // Check if UUID (file from upload backend)
     const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
     if (uuidPattern.test(filename)) {
-      // File uploaded ke backend, akses via backend URL
-      return `http://localhost:8083/uploads/${filename}`;
+      const baseUrl = environment.apiUrl.replace('/api', '');
+      return `${baseUrl}/uploads/${filename}`;
     }
-    
-    // Default: files in /public/content/
     return `/content/${filename}`;
   }
 
