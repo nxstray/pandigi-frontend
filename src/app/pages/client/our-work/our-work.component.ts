@@ -5,6 +5,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormsModule } from '@angular/forms';
 import { ContentPageService, PageName } from '../../../service/admin/content-page.service';
 import { ProjectService, ProjectDTO, ProjectCategory, ProjectSearchRequest, ProjectSearchResponse } from '../../../service/project/project.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-our-work',
@@ -297,21 +298,19 @@ export class OurWorkComponent implements OnInit {
   
   getImageUrl(filename: string | undefined): string {
     if (!filename) return '';
-    
-    if (filename.startsWith('http://') || filename.startsWith('https://')) {
-      return filename;
-    }
-    
-    if (filename.startsWith('/content/')) {
-      return filename;
-    }
-    
+    if (filename.startsWith('http://') || filename.startsWith('https://')) return filename;
+    if (filename.startsWith('/content/')) return filename;
+
     const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
     if (uuidPattern.test(filename)) {
-      return `http://localhost:8083/uploads/${filename}`;
+      const baseUrl = environment.apiUrl.replace('/api', '');
+      return `${baseUrl}/uploads/${filename}`;
     }
-    
     return `/content/${filename}`;
+  }
+
+  private getContentImageUrl(filename: string | undefined): string {
+    return this.getImageUrl(filename);
   }
 
   // CMS Content Methods
@@ -338,25 +337,6 @@ export class OurWorkComponent implements OnInit {
         console.error('Error loading page content from CMS:', err);
       }
     });
-  }
-  
-  private getContentImageUrl(filename: string | undefined): string {
-    if (!filename) return '';
-    
-    if (filename.startsWith('http://') || filename.startsWith('https://')) {
-      return filename;
-    }
-    
-    if (filename.startsWith('/content/')) {
-      return filename;
-    }
-    
-    const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
-    if (uuidPattern.test(filename)) {
-      return `http://localhost:8083/uploads/${filename}`;
-    }
-    
-    return `/content/${filename}`;
   }
 
   // Scroll and Animation Methods
